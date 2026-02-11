@@ -1,0 +1,60 @@
+<%- include('header') %>
+
+    <div class="add-movie-wrapper">
+        <div class="add-movie-card">
+            <h2>Edit Movie</h2>
+
+            <form action="/update-movie/<%= movie._id %>" method="post" enctype="multipart/form-data">
+
+                <!-- Movie Name -->
+                <div class="form-group">
+                    <label>Movie Name</label>
+                    <input type="text" name="name" value="<%= movie.name %>" required>
+                </div>
+
+                <!-- Director -->
+                <div class="form-group">
+                    <label>Director</label>
+                    <input type="text" name="director" value="<%= movie.director %>">
+                </div>
+
+                <!-- Genre -->
+                <div class="form-group">
+                    <label>Genre</label>
+                    <select name="genre">
+                        <option value="Action" <%=movie.genre==='Action' ?'selected':'' %>>Action</option>
+                        <option value="Drama" <%=movie.genre==='Drama' ?'selected':'' %>>Drama</option>
+                        <option value="Comedy" <%=movie.genre==='Comedy' ?'selected':'' %>>Comedy</option>
+                        <option value="Romance" <%=movie.genre==='Romance' ?'selected':'' %>>Romance</option>
+                        <option value="Romance" <%=movie.genre==='Romance' ?'selected':'' %>>horror</option>
+                        <option value="Romance" <%=movie.genre==='Romance' ?'selected':'' %>>Thriller</option>
+                    </select>
+                </div>
+                <!-- Rating -->
+                <div class="form-group">
+                    <label>Rating</label>
+                    <input type="number" step="0.1" name="rating" value="<%= movie.rating %>">
+                </div>
+
+                <!-- File Upload -->
+                <div class="form-group">
+                    <label>Movie Poster</label>
+                    <input type="file" name="image" accept="image/*" onchange="previewImage(event)">
+                </div>
+
+                <!-- Preview -->
+                <div class="image-preview">
+                    <img id="preview" src="<%= movie.image %>" style="width:150px; border-radius:8px;">
+                </div>
+
+                <button type="submit" class="submit-btn">Update Movie</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function previewImage(event) {
+            const img = document.getElementById("preview");
+            img.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>

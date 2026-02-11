@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Add Movie</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: linear-gradient(135deg, #141e30, #243b55);
+            color: white;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        input,
+        select,
+        button {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #00bcd4;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <center>
+            <h2>Add Movie</h2>
+        </center>
+
+        <form action="/add-movie" method="POST" enctype="multipart/form-data">
+            <input type="text" name="title" placeholder="Movie Title" required>
+            <input type="text" name="director" placeholder="Director Name" required>
+
+            <select name="genre" required>
+                <option value="" disabled selected>-- Select Genre --</option>
+                <option value="Action">Action</option>
+                <option value="Drama">Drama</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Romance">Romance</option>
+                <option value="Horror">Horror</option>
+                <option value="Thriller">Thriller</option>
+            </select>
+
+
+            <input type="file" name="image" required>
+
+            <button type="submit">Add Movie</button>
+        </form>
+
+        <a href="/" style="color:white;">⬅ Back</a>
+    </div>
+
+</body>
+
+</html>
