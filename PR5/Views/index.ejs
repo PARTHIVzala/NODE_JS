@@ -1,0 +1,32 @@
+<%- include('header') %>
+
+<h2 class="page-title">🎬 Movie Collection</h2>
+
+<div class="movie-container">
+    <% movies.forEach(mov => { %>
+        
+        <div class="movie-card">
+
+            <div class="poster">
+                <img src="<%= mov.image %>" alt="Movie Poster">
+                <div class="rating-badge">
+                    ⭐ <%= mov.rating %>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <h3><%= mov.name %></h3>
+
+                <p>🎥 Director: <%= mov.director %></p>
+                <p>🎭 Genre: <%= mov.genre %></p>
+
+                <div class="btn-group">
+                    <a href="/edit-movie/<%= mov._id %>" class="btn edit-btn">Edit</a>
+                    <a href="/delete-movie/<%= mov._id %>" class="btn delete-btn">Delete</a>
+                </div>
+            </div>
+
+        </div>
+
+    <% }) %>
+</div>
