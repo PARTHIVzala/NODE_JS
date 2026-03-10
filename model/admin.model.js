@@ -17,7 +17,13 @@ const adminSchema = mongoose.Schema({
     role: {
         type: String,
         default: "admin"
+    },
+    created_date: {
+        type: Date,
+        default: Date.now
     }
 });
 
-module.exports = mongoose.model("Admin", adminSchema);
+const Admin = mongoose.model("Admin", adminSchema);
+
+module.exports = Admin;
