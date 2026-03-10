@@ -6,13 +6,10 @@ const session = require("express-session");
 
 // Database Connection
 const dbconnect = require("./config/dbconnect");
+dbconnect();
 
 // Passport Config
 const passport = require("./controller/localStregert");
-
-// ======================
-// Basic Setup
-// ======================
 
 // View Engine
 app.set("view engine", "ejs");
@@ -29,36 +26,57 @@ app.use(express.urlencoded({ extended: true }));
 // Cookie Parser
 app.use(cookieParser());
 
-// ======================
-// Session Setup
-// ======================
+// Session
 app.use(
   session({
+    name: "adminpanel",
     secret: "vivekSecret",
     resave: false,
     saveUninitialized: false,
   })
 );
 
-// ======================
-// Passport Setup
-// ======================
+// Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-// ======================
-// Routes
-// ======================
-app.use("/", require("./routes/index.routes"));
+// ================= ROUTES =================
 
-// ======================
-// Database Connection
-// ======================
-dbconnect();
+// Login Page
+app.get("/", (req, res) => {
+  res.render("login");
+});
 
-// ======================
-// Server Start
-// ======================
+// Login Process
+app.post(
+  "/login",
+  passport.authenticate("local", { failureRedirect: "/" }),
+  (req, res) => {
+    res.redirect("/dashboard");
+  }
+);
+
+// Dashboard
+app.get("/dashboard", passport.checkAuthenticate, (req, res) => {
+  res.render("dashboard");
+});
+
+// Logout
+app.get("/logout", (req, res) => {
+  req.logout(function (err) {
+    if (err) {
+      console.log(err);
+    }
+    res.redirect("/");
+  });
+});
+
+// Admin Routes
+const adminRoutes = require("./routes/admin.routes");
+app.use("/admin", adminRoutes);
+
+// ================= SERVER =================
+
 app.listen(3000, () => {
   console.log("Server started at http://localhost:3000");
 });
