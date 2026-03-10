@@ -98,4 +98,4 @@ exports.Chnage = async (req, res) => {
         console.log(error);
         res.redirect("/");
     }
-};
+}
