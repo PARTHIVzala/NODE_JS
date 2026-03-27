@@ -1,0 +1,123 @@
+<%- include('header') %>
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">Edit blog</h4>
+                    <div class="ml-auto text-right">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">blog</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row h-100 flex my-auto justify-content-center align-items-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <form class="form-horizontal" method="post" action="/blog/edit-blog/<%=blog._id%>"
+                            enctype="multipart/form-data">
+                            <div class="card-body">
+                                <h4 class="card-title">Edit Blog</h4>
+                                <div class="form-group row">
+                                    <label for="title"
+                                        class="col-sm-3 text-right control-label col-form-label">Title</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" value="<%= blog.title %>" name="title"
+                                            id="title" required placeholder="Title Here">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="author"
+                                        class="col-sm-3 text-right control-label col-form-label">Author</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" value="<%= blog.author %>" name="author"
+                                            id="author" required placeholder="Author Name Here">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="cono1"
+                                        class="col-sm-3 text-right control-label col-form-label">Description</label>
+                                    <div class="col-sm-9">
+                                        <textarea class="form-control"
+                                            name="description"><%= blog.description %></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label for="category"
+                                        class="col-sm-3 text-right control-label col-form-label">Category</label>
+                                    <div class="col-md-9">
+                                        <select name="category" is="category" class="select2 form-control custom-select"
+                                            style="width: 100%; height:36px;">
+                                            <!-- <option value="default" disabled selected>--</option>-->
+                                            <option selected value="Other">Other</option>
+                                            <option <%= blog.category == 'Technology' ? 'selected' : '' %> value="Technology">Technology</option>
+                                            <option <%= blog.category == 'Cooking' ? 'selected' : '' %> value="Cooking">Cooking</option>
+                                            <option <%= blog.category == 'Travel' ? 'selected' : '' %> value="Travel">Travel</option>
+                                            <option <%= blog.category == 'Personal' ? 'selected' : '' %> value="Personal">Personal</option>
+                                            <option <%= blog.category == 'Business' ? 'selected' : '' %> value="Business">Business</option>
+                                            <option <%= blog.category == 'Fashion' ? 'selected' : '' %> value="Fashion">Fashion</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group row">
+                                    <label class="col-sm-3 text-right control-label col-form-label">Cover Image</label>
+                                    <div class="col-sm-9">
+                                        <div> <!-- previous image -->
+                                            <img src="<%=blog.coverImage%>" class="img-thumbnail" />
+                                        </div>
+
+                                        <div class="custom-file">
+                                            <input type="file" name="coverImage" class="custom-file-input"
+                                                id="profileImage">
+                                            <label class="custom-file-label" for="profileImage">Choose file...</label>
+                                            <div class="invalid-feedback">Example invalid custom file feedback</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-top">
+                                <div class="card-body">
+                                    <input type="submit" value="Edit Blog" class="btn btn-primary rounded-4">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- Right sidebar -->
+            <!-- ============================================================== -->
+            <!-- .right-sidebar -->
+            <!-- ============================================================== -->
+            <!-- End Right sidebar -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+
+        <%- include('footer') %>

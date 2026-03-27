@@ -1,0 +1,97 @@
+<%- include('header') %>
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Edit Sub Category</h4>
+                <div class="ml-auto text-right">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Sub Category</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row h-100 flex my-auto justify-content-center align-items-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <form class="form-horizontal" method="post" action="/subcategory/edit-subcategory/<%=subcategory._id%>" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <h4 class="card-title">Sub Category Info</h4>
+                            <div class="form-group row">
+                                <label for="scname" class="col-sm-3 text-right control-label col-form-label">Sub Category Name </label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="scname" value="<%=subcategory.scname%>" id="scname" required placeholder="Sub Category Name Here">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 text-right control-label col-form-label">Category Name</label>
+                                <div class="col-md-9">
+                                    <select name="cid" required class="select2 form-control custom-select" style="width: 100%; height:36px;">
+                                        <option selected disabled value="">Select</option>
+                                        <% categories.forEach((category, i)=>{ %>
+                                            <option value="<%=category._id%>" <%= subcategory.cid && subcategory.cid._id.toString() === category._id.toString() ? 'selected' : '' %>>
+                                                <%=category.cname%>
+                                            </option>
+                                            <% }) %>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 text-right control-label col-form-label">Sub Category Cover Image</label>
+                                <div class="col-sm-9">
+                                    <div> <!-- previous image -->
+                                        <img src="<%=subcategory.categoryCover%>" class="img-thumbnail"/>
+                                    </div>
+
+                                    <div class="custom-file">
+                                        <input type="file" name="subcategoryImage" class="custom-file-input" id="subcategoryImage">
+                                        <label class="custom-file-label" for="subcategoryImage">Choose file...</label>
+                                        <div class="invalid-feedback">Example invalid custom file feedback</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body">
+                                <input type="submit" value="Edit Sub Category" class="btn btn-primary rounded-4">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+        <!-- ============================================================== -->
+        <!-- Right sidebar -->
+        <!-- ============================================================== -->
+        <!-- .right-sidebar -->
+        <!-- ============================================================== -->
+        <!-- End Right sidebar -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+
+<%- include('footer') %>

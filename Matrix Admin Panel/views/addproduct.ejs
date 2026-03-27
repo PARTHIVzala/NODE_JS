@@ -1,0 +1,201 @@
+<%- include('header') %>
+<!-- ============================================================== -->
+<!-- Page wrapper  -->
+<!-- ============================================================== -->
+<div class="page-wrapper">
+    <!-- ============================================================== -->
+    <!-- Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <div class="page-breadcrumb">
+        <div class="row">
+            <div class="col-12 d-flex no-block align-items-center">
+                <h4 class="page-title">Add Product</h4>
+                <div class="ml-auto text-right">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/product/view-product">Products</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Add Product</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Bread crumb and right sidebar toggle -->
+    <!-- ============================================================== -->
+    <!-- ============================================================== -->
+    <!-- Container fluid  -->
+    <!-- ============================================================== -->
+    <div class="container-fluid">
+        <!-- ============================================================== -->
+        <!-- Start Page Content -->
+        <!-- ============================================================== -->
+        <div class="row h-100 flex my-auto justify-content-center align-items-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <form class="form-horizontal" method="post" action="/product/add-product" enctype="multipart/form-data">
+                        <div class="card-body">
+                            <h4 class="card-title">Product Information</h4>
+
+                            <div class="form-group row">
+                                <label for="pname" class="col-sm-3 text-right control-label col-form-label">Product Name</label>
+                                <div class="col-sm-9">
+                                    <input type="text" class="form-control" name="pname" id="pname" required placeholder="Enter product name">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="description" class="col-sm-3 text-right control-label col-form-label">Description</label>
+                                <div class="col-sm-9">
+                                    <textarea class="form-control" name="description" id="description" rows="3" required placeholder="Enter product description"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="price" class="col-sm-3 text-right control-label col-form-label">Price ($)</label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" name="price" id="price" required placeholder="0.00" step="0.01" min="0">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="quantity" class="col-sm-3 text-right control-label col-form-label">Quantity</label>
+                                <div class="col-sm-9">
+                                    <input type="number" class="form-control" name="quantity" id="quantity" required placeholder="0" min="0">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="category" class="col-sm-3 text-right control-label col-form-label">Category</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" name="category" id="category" required>
+                                        <option value="">Select Category</option>
+                                        <% categories.forEach(category => { %>
+                                            <option value="<%= category._id %>"><%= category.cname %></option>
+                                        <% }) %>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="subcategory" class="col-sm-3 text-right control-label col-form-label">Subcategory</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" name="subcategory" id="subcategory" required disabled>
+                                        <option value="">Select category first</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="extracategory" class="col-sm-3 text-right control-label col-form-label">Extracategory</label>
+                                <div class="col-sm-9">
+                                    <select class="form-control" name="extracategory" id="extracategory" required disabled>
+                                        <option value="">Select subcategory first</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-3 text-right control-label col-form-label">Product Image</label>
+                                <div class="col-sm-9">
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" name="productImage" id="productImage" accept="image/*">
+                                        <label class="custom-file-label" for="productImage">Choose product image...</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-top">
+                            <div class="card-body">
+                                <input type="submit" value="Add Product" class="btn btn-primary rounded-4">
+                                <a href="/product/view-product" class="btn btn-secondary rounded-4 ml-2">Cancel</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Right sidebar -->
+        <!-- ============================================================== -->
+        <!-- .right-sidebar -->
+        <!-- ============================================================== -->
+        <!-- End Right sidebar -->
+        <!-- ============================================================== -->
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Container fluid  -->
+    <!-- ============================================================== -->
+
+    <script>
+        const categorySelect = document.getElementById('category');
+        const subcategorySelect = document.getElementById('subcategory');
+        const extracategorySelect = document.getElementById('extracategory');
+
+        const setSubcategoryOptions = (subcategories) => {
+            subcategorySelect.innerHTML = '';
+            const placeholder = document.createElement('option');
+            placeholder.value = '';
+            placeholder.disabled = true;
+            placeholder.selected = true;
+            placeholder.textContent = 'Select Subcategory';
+            subcategorySelect.appendChild(placeholder);
+            subcategories.forEach(sc => {
+                const option = document.createElement('option');
+                option.value = sc._id;
+                option.textContent = sc.scname;
+                subcategorySelect.appendChild(option);
+            });
+            subcategorySelect.disabled = false;
+        };
+        const setExtracategoryOptions = (extracategories) => {
+            extracategorySelect.innerHTML = '';
+            const placeholder = document.createElement('option');
+            placeholder.value = '';
+            placeholder.disabled = true;
+            placeholder.selected = true;
+            placeholder.textContent = 'Select Extracategory';
+            extracategorySelect.appendChild(placeholder);
+            extracategories.forEach(ec => {
+                const option = document.createElement('option');
+                option.value = ec._id;
+                option.textContent = ec.ecname;
+                extracategorySelect.appendChild(option);
+            }); 
+            extracategorySelect.disabled = false;
+        };
+        categorySelect.addEventListener('change', async () => {
+            const categoryId = categorySelect.value;
+            if (!categoryId) {
+                subcategorySelect.disabled = true;
+                extracategorySelect.disabled = true;
+                return;
+            }
+            try {
+                const response = await fetch(`/subcategory/api/by-category/${categoryId}`);
+                const subcategories = await response.json();
+                setSubcategoryOptions(subcategories);
+                extracategorySelect.disabled = true; // Reset extracategory when category changes
+            } catch (err) {
+                console.error(err);
+            }
+        });
+        subcategorySelect.addEventListener('change', async () => {
+            const subcategoryId = subcategorySelect.value;
+            if (!subcategoryId) {
+                extracategorySelect.disabled = true;
+                return;
+            }
+            try {
+                const response = await fetch(`/extracategory/api/by-subcategory/${subcategoryId}`);
+                const extracategories = await response.json();
+                setExtracategoryOptions(extracategories);
+            } catch (err) {
+                console.error(err);
+            }
+        });
+    </script>
+
+<%- include('footer') %>

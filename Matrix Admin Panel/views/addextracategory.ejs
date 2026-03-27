@@ -1,0 +1,148 @@
+<%- include('header') %>
+    <!-- ============================================================== -->
+    <!-- Page wrapper  -->
+    <!-- ============================================================== -->
+    <div class="page-wrapper">
+        <!-- ============================================================== -->
+        <!-- Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <div class="page-breadcrumb">
+            <div class="row">
+                <div class="col-12 d-flex no-block align-items-center">
+                    <h4 class="page-title">Add Extra Category</h4>
+                    <div class="ml-auto text-right">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Extra Category</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Bread crumb and right sidebar toggle -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- Container fluid  -->
+        <!-- ============================================================== -->
+        <div class="container-fluid">
+            <!-- ============================================================== -->
+            <!-- Start Page Content -->
+            <!-- ============================================================== -->
+            <div class="row h-100 flex my-auto justify-content-center align-items-center">
+                <div class="col-md-6">
+                    <div class="card">
+                        <form class="form-horizontal" method="post" action="/extracategory/add-extracategory"
+                            enctype="multipart/form-data">
+                            <div class="card-body">
+                                <h4 class="card-title">Extra Category Info</h4>
+                                <div class="form-group row">
+                                    <label for="ecname" class="col-sm-3 text-right control-label col-form-label">Extra
+                                        Category Name </label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" name="ecname" id="ecname" required
+                                            placeholder="Extra Category Name Here">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 text-right control-label col-form-label">Category</label>
+                                    <div class="col-md-9">
+                                        <select id="categorySelect" required class="select2 form-control custom-select"
+                                            style="width: 100%; height:36px;">
+                                            <option selected disabled value="">Select</option>
+                                            <% categories.forEach((category)=> { %>
+                                                <option value="<%= category._id %>">
+                                                    <%= category.cname %>
+                                                </option>
+                                                <% }) %>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 text-right control-label col-form-label">Sub Category
+                                        Name</label>
+                                    <div class="col-md-9">
+                                        <select id="subcategorySelect" name="scid" required
+                                            class="select2 form-control custom-select" style="width: 100%; height:36px;"
+                                            disabled>
+                                            <option selected disabled value="">Select category first</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 text-right control-label col-form-label">Extra Category Cover
+                                        Image</label>
+                                    <div class="col-sm-9">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" name="categoryImage"
+                                                id="categoryImage" required>
+                                            <label class="custom-file-label" for="categoryImage">Choose file...</label>
+                                            <div class="invalid-feedback">Example invalid custom file feedback</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="border-top">
+                                <div class="card-body">
+                                    <input type="submit" value="Add Extra Category" class="btn btn-primary rounded-4">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- ============================================================== -->
+            <!-- Right sidebar -->
+            <!-- ============================================================== -->
+            <!-- .right-sidebar -->
+            <!-- ============================================================== -->
+            <!-- End Right sidebar -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Container fluid  -->
+        <!-- ============================================================== -->
+
+        <script>
+            const categorySelect = document.getElementById('categorySelect');
+            const subcategorySelect = document.getElementById('subcategorySelect');
+
+            const setSubcategoryOptions = (subcategories) => {
+                subcategorySelect.innerHTML = '';
+                const placeholder = document.createElement('option');
+                placeholder.value = '';
+                placeholder.disabled = true;
+                placeholder.selected = true;
+                placeholder.textContent = 'Select';
+                subcategorySelect.appendChild(placeholder);
+
+                subcategories.forEach(sc => {
+                    const option = document.createElement('option');
+                    option.value = sc._id;
+                    option.textContent = `${sc.scname} (${sc.cid ? sc.cid.cname : 'N/A'})`;
+                    subcategorySelect.appendChild(option);
+                });
+                subcategorySelect.disabled = false;
+            };
+
+            categorySelect.addEventListener('change', async () => {
+                const categoryId = categorySelect.value;
+                if (!categoryId) {
+                    subcategorySelect.disabled = true;
+                    return;
+                }
+                try {
+                    const response = await fetch(`/subcategory/api/by-category/${categoryId}`);
+                    const subcategories = await response.json();
+                    setSubcategoryOptions(subcategories);
+                } catch (err) {
+                    console.error(err);
+                }
+            });
+        </script>
+
+        <%- include('footer') %>
